@@ -110,7 +110,7 @@ getDeepHFScores <- function(sequences,
                        "deephf",
                        package="crisprScore",
                        mustWork=TRUE)
-    deephf <- import_from_path("getDeepHF", path=dir)
+    deephf <- import_from_path("getDeepHF", path=dir, delay_load=TRUE)
 
     df <- data.frame(sequence=sequences,
                      score=NA_real_,
