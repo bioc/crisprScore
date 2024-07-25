@@ -42,6 +42,16 @@
 #' @importFrom basilisk obtainEnvironmentPath
 #' @importFrom basilisk.utils activateEnvironment
 getAzimuthScores <- function(sequences, fork=FALSE){
+
+    .dumpToFile <- function(sequences, file){
+        write.table(sequences,
+                    file=file,
+                    quote=FALSE,
+                    col.names=FALSE,
+                    row.names=FALSE)
+    }
+
+
     sequences <- .checkSequenceInputs(sequences)
     if (unique(nchar(sequences))!=30){
         stop("Provided sequences must have length 30nt ",
