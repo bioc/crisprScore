@@ -8,11 +8,7 @@ crisprScore: on-target and off-target scoring for CRISPR gRNAs
     -   <a href="#software-requirements" id="toc-software-requirements">Software
         requirements</a>
         -   <a href="#os-requirements" id="toc-os-requirements">OS Requirements</a>
-    -   <a href="#installation-from-bioconductor"
-        id="toc-installation-from-bioconductor">Installation from
-        Bioconductor</a>
-    -   <a href="#installation-from-github"
-        id="toc-installation-from-github">Installation from GitHub</a>
+    -   <a href="#installation" id="toc-installation">Installation</a>
 -   <a href="#getting-started" id="toc-getting-started">Getting started</a>
 -   <a href="#on-targeting-efficiency-scores"
     id="toc-on-targeting-efficiency-scores">On-targeting efficiency
@@ -46,7 +42,7 @@ crisprScore: on-target and off-target scoring for CRISPR gRNAs
 Authors: Jean-Philippe Fortin, Aaron Lun, Luke Hoberecht, Pirunthan
 Perampalan
 
-Date: July 1, 2022
+Date: July 25, 2024
 
 # Overview
 
@@ -61,10 +57,10 @@ provides a Lindel-derived score to predict the probability of a gRNA to
 produce indels inducing a frameshift for the Cas9 nuclease. Note that
 DeepHF, DeepCpf1 and enPAM+GB are not available on Windows machines.
 
-Our work is described in a recent bioRxiv preprint: [“The crisprVerse: A
+Our work is described in our recent papera recent bioRxiv preprint: [“A
 comprehensive Bioconductor ecosystem for the design of CRISPR guide RNAs
 across nucleases and
-technologies”](https://www.biorxiv.org/content/10.1101/2022.04.21.488824v3)
+technologies”](https://www.nature.com/articles/s41467-022-34320-7)
 
 Our main gRNA design package
 [crisprDesign](https://github.com/crisprVerse/crisprDesign) utilizes the
@@ -80,13 +76,13 @@ to learn how to use `crisprScore` via `crisprDesign`.
 ### OS Requirements
 
 This package is supported for macOS, Linux and Windows machines. Some
-functionalities are not supported for Windows machines. Packages were
-developed and tested on R version 4.2.1.
+functionalities are not supported for Windows machines. Packages require
+R version 4.4 or higher.
 
-## Installation from Bioconductor
+## Installation
 
-`crisprScore` can be installed from from the Bioconductor devel branch
-using the following commands in a fresh R session:
+`crisprScore` can be installed from Bioconductor using the following
+commands in a fresh R session:
 
 ``` r
 if (!require("BiocManager", quietly = TRUE))
@@ -96,27 +92,29 @@ BiocManager::install(version="devel")
 BiocManager::install("crisprScore")
 ```
 
-The complete documentation for the package can be found
-[here](https://bioconductor.org/packages/devel/bioc/manuals/crisprScore/man/crisprScore.pdf).
-
-## Installation from GitHub
-
-Alternatively, the development version of `crisprScore` and its
-dependencies can be installed by typing the following commands inside of
-an R session:
+To install the release version, use this instead:
 
 ``` r
-install.packages("devtools")
-library(devtools)
-install_github("crisprVerse/crisprScoreData")
-install_github("crisprVerse/crisprScore")
+BiocManager::install(version="release")
 ```
 
+Under the hood, `crisprScore` uses the `basilisk` package to install
+Python environments needed to run some of the prediction algorithms.
 When calling one of the scoring methods for the first time after package
-installation, the underlying python module and conda environment will be
-automatically downloaded and installed without the need for user
+installation, the underlying python module and conda environments will
+be automatically downloaded and installed without the need for user
 intervention. This may take several minutes, but this is a one-time
-installation. the first time after package installation.
+installation.
+
+We made recent changes to install Python packages only from the public
+Bioconda and conda-forge channels to be compliant with the latest
+Anaconda licensing policies. Setting the environment variable
+`BASILISK_USE_MINIFORGE=1` will ensure that crisprScore will use
+miniforge to install the Python packages. See the documentation of the
+`basilisk` package [(link
+here)](https://www.bioconductor.org/packages/release/bioc/html/basilisk.html)
+for more information re. different settings for the installation of the
+underlying Python packages
 
 Note that RStudio users will need to add the following line to their
 `.Rprofile` file in order for `crisprScore` to work properly:
@@ -547,8 +545,8 @@ getMITScores(spacers=spacer,
 ```
 
     ##                 spacer          protospacer      score
-    ## 1 ATCGATGCTGATGCTAGATA ACCGATGCTGATGCTAGATA 0.31500000
-    ## 2 ATCGATGCTGATGCTAGATA ATCGATGCTGATGCTAGATT 1.00000000
+    ## 1 ATCGATGCTGATGCTAGATA ACCGATGCTGATGCTAGATA 1.00000000
+    ## 2 ATCGATGCTGATGCTAGATA ATCGATGCTGATGCTAGATT 0.41700000
     ## 3 ATCGATGCTGATGCTAGATA ATCGATGCTGATGCTAGATA 0.06944444
 
 ## CFD score
@@ -636,65 +634,52 @@ code.
 sessionInfo()
 ```
 
-    ## R version 4.2.1 (2022-06-23)
-    ## Platform: x86_64-apple-darwin17.0 (64-bit)
-    ## Running under: macOS Catalina 10.15.7
+    ## R version 4.4.1 (2024-06-14)
+    ## Platform: x86_64-apple-darwin20
+    ## Running under: macOS Ventura 13.6.7
     ## 
     ## Matrix products: default
-    ## BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
-    ## LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+    ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
     ## 
     ## locale:
     ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    ## 
+    ## time zone: America/Los_Angeles
+    ## tzcode source: internal
     ## 
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] crisprScore_1.3.2     crisprScoreData_1.3.0 ExperimentHub_2.5.0  
-    ## [4] AnnotationHub_3.5.1   BiocFileCache_2.5.0   dbplyr_2.2.1         
-    ## [7] BiocGenerics_0.43.4  
+    ## [1] crisprScore_1.9.1     crisprScoreData_1.9.0 ExperimentHub_2.13.0 
+    ## [4] AnnotationHub_3.13.0  BiocFileCache_2.13.0  dbplyr_2.5.0         
+    ## [7] BiocGenerics_0.51.0  
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_1.0.9                    lattice_0.20-45              
-    ##  [3] dir.expiry_1.5.1              png_0.1-7                    
-    ##  [5] Biostrings_2.65.3             assertthat_0.2.1             
-    ##  [7] digest_0.6.29                 utf8_1.2.2                   
-    ##  [9] mime_0.12                     R6_2.5.1                     
-    ## [11] GenomeInfoDb_1.33.7           stats4_4.2.1                 
-    ## [13] RSQLite_2.2.16                evaluate_0.16                
-    ## [15] highr_0.9                     httr_1.4.4                   
-    ## [17] pillar_1.8.1                  basilisk_1.9.6               
-    ## [19] zlibbioc_1.43.0               rlang_1.0.6                  
-    ## [21] curl_4.3.2                    rstudioapi_0.14              
-    ## [23] blob_1.2.3                    S4Vectors_0.35.3             
-    ## [25] Matrix_1.5-3                  reticulate_1.26              
-    ## [27] rmarkdown_2.16                stringr_1.4.1                
-    ## [29] RCurl_1.98-1.8                bit_4.0.4                    
-    ## [31] shiny_1.7.2                   compiler_4.2.1               
-    ## [33] httpuv_1.6.5                  xfun_0.32                    
-    ## [35] pkgconfig_2.0.3               htmltools_0.5.3              
-    ## [37] tidyselect_1.1.2              KEGGREST_1.37.3              
-    ## [39] tibble_3.1.8                  GenomeInfoDbData_1.2.8       
-    ## [41] interactiveDisplayBase_1.35.0 IRanges_2.31.2               
-    ## [43] randomForest_4.7-1.1          fansi_1.0.3                  
-    ## [45] crayon_1.5.1                  dplyr_1.0.10                 
-    ## [47] later_1.3.0                   basilisk.utils_1.9.3         
-    ## [49] bitops_1.0-7                  rappdirs_0.3.3               
-    ## [51] grid_4.2.1                    jsonlite_1.8.0               
-    ## [53] xtable_1.8-4                  lifecycle_1.0.3              
-    ## [55] DBI_1.1.3                     magrittr_2.0.3               
-    ## [57] cli_3.4.0                     stringi_1.7.8                
-    ## [59] cachem_1.0.6                  XVector_0.37.1               
-    ## [61] promises_1.2.0.1              ellipsis_0.3.2               
-    ## [63] filelock_1.0.2                generics_0.1.3               
-    ## [65] vctrs_0.5.1                   tools_4.2.1                  
-    ## [67] bit64_4.0.5                   Biobase_2.57.1               
-    ## [69] glue_1.6.2                    purrr_0.3.4                  
-    ## [71] BiocVersion_3.16.0            parallel_4.2.1               
-    ## [73] fastmap_1.1.0                 yaml_2.3.5                   
-    ## [75] AnnotationDbi_1.59.1          BiocManager_1.30.18          
-    ## [77] memoise_2.0.1                 knitr_1.40
+    ##  [1] KEGGREST_1.45.1         dir.expiry_1.13.0       xfun_0.46              
+    ##  [4] lattice_0.22-6          Biobase_2.65.0          vctrs_0.6.5            
+    ##  [7] tools_4.4.1             generics_0.1.3          stats4_4.4.1           
+    ## [10] curl_5.2.1              parallel_4.4.1          tibble_3.2.1           
+    ## [13] fansi_1.0.6             AnnotationDbi_1.67.0    RSQLite_2.3.7          
+    ## [16] highr_0.11              blob_1.2.4              pkgconfig_2.0.3        
+    ## [19] Matrix_1.7-0            S4Vectors_0.43.2        lifecycle_1.0.4        
+    ## [22] GenomeInfoDbData_1.2.12 stringr_1.5.1           compiler_4.4.1         
+    ## [25] Biostrings_2.73.1       GenomeInfoDb_1.41.1     htmltools_0.5.8.1      
+    ## [28] yaml_2.3.9              pillar_1.9.0            crayon_1.5.3           
+    ## [31] cachem_1.1.0            basilisk_1.17.0         tidyselect_1.2.1       
+    ## [34] digest_0.6.36           stringi_1.8.4           dplyr_1.1.4            
+    ## [37] BiocVersion_3.20.0      grid_4.4.1              fastmap_1.2.0          
+    ## [40] cli_3.6.3               magrittr_2.0.3          randomForest_4.7-1.1   
+    ## [43] utf8_1.2.4              filelock_1.0.3          UCSC.utils_1.1.0       
+    ## [46] rappdirs_0.3.3          bit64_4.0.5             rmarkdown_2.27         
+    ## [49] XVector_0.45.0          httr_1.4.7              bit_4.0.5              
+    ## [52] reticulate_1.38.0       png_0.1-8               memoise_2.0.1          
+    ## [55] evaluate_0.24.0         knitr_1.48              IRanges_2.39.2         
+    ## [58] basilisk.utils_1.17.0   rlang_1.1.4             Rcpp_1.0.13            
+    ## [61] glue_1.7.0              DBI_1.2.3               BiocManager_1.30.23    
+    ## [64] rstudioapi_0.16.0       jsonlite_1.8.8          R6_2.5.1               
+    ## [67] zlibbioc_1.51.1
 
 # References
 

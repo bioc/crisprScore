@@ -12,7 +12,7 @@ options("knitr.graphics.auto_pdf"=TRUE)
 
 Authors: Jean-Philippe Fortin, Aaron Lun, Luke Hoberecht, Pirunthan Perampalan
 
-Date: July 1, 2022
+Date: July 25, 2024
 
 # Overview
 
@@ -26,8 +26,8 @@ package also provides a Lindel-derived score to predict the probability
 of a gRNA to produce indels inducing a frameshift for the Cas9 nuclease.
 Note that DeepHF, DeepCpf1 and enPAM+GB are not available on Windows machines. 
 
-Our work is described in a recent bioRxiv preprint:
-["The crisprVerse: A comprehensive Bioconductor ecosystem for the design of CRISPR guide RNAs across nucleases and technologies"](https://www.biorxiv.org/content/10.1101/2022.04.21.488824v3)
+Our work is described in our recent papera recent bioRxiv preprint:
+["A comprehensive Bioconductor ecosystem for the design of CRISPR guide RNAs across nucleases and technologies"](https://www.nature.com/articles/s41467-022-34320-7)
 
 Our main gRNA design package [crisprDesign](https://github.com/crisprVerse/crisprDesign) utilizes the `crisprScore` package to add on- and off-target scores to user-designed gRNAs; check out our [Cas9 gRNA tutorial page](https://github.com/crisprVerse/Tutorials/tree/master/Design_CRISPRko_Cas9) to learn how to use `crisprScore` via `crisprDesign`. 
 
@@ -40,13 +40,12 @@ Our main gRNA design package [crisprDesign](https://github.com/crisprVerse/crisp
 
 This package is supported for macOS, Linux and Windows machines.
 Some functionalities are not supported for Windows machines.
-Packages were developed and tested on R version 4.2.1.
+Packages require R version 4.4 or higher. 
 
 
-## Installation from Bioconductor
+## Installation 
 
-`crisprScore` can be installed from from the Bioconductor devel branch
-using the following commands in a fresh R session:
+`crisprScore` can be installed from Bioconductor using the following commands in a fresh R session:
 
 ```{r, eval=FALSE}
 if (!require("BiocManager", quietly = TRUE))
@@ -56,26 +55,25 @@ BiocManager::install(version="devel")
 BiocManager::install("crisprScore")
 ```
 
-The complete documentation for the package can be found [here](https://bioconductor.org/packages/devel/bioc/manuals/crisprScore/man/crisprScore.pdf).
+To install the release version, use this instead:
 
-## Installation from GitHub
-
-Alternatively, the development version of `crisprScore` and its dependencies can be installed by typing the following commands inside of an R session:
-
-
-```r
-install.packages("devtools")
-library(devtools)
-install_github("crisprVerse/crisprScoreData")
-install_github("crisprVerse/crisprScore")
+```{r, eval=FALSE}
+BiocManager::install(version="release")
 ```
 
-
-When calling one of the scoring methods for the first time after package
-installation, the underlying python module and conda environment will be 
+Under the hood, `crisprScore` uses the `basilisk` package to install Python
+environments needed to run some of the prediction algorithms. When calling
+one of the scoring methods for the first time after package
+installation, the underlying python module and conda environments will be 
 automatically downloaded and installed without the need for user intervention.
 This may take several minutes, but this is a one-time installation. 
-the first time after package installation.
+
+We made recent changes to install Python packages only from the public 
+Bioconda and conda-forge channels to be compliant with the latest
+Anaconda licensing policies. Setting the environment variable `BASILISK_USE_MINIFORGE=1` will ensure that crisprScore will use miniforge
+to install the Python packages. See the documentation of the `basilisk` package
+[(link here)](https://www.bioconductor.org/packages/release/bioc/html/basilisk.html) for more information re. different settings for the installation of the
+underlying Python packages
 
 Note that RStudio users will need to add the following line to their `.Rprofile`
 file in order for `crisprScore` to work properly:
