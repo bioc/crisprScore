@@ -3,6 +3,10 @@
 \encoding{UTF-8}
 
 
+\section{Version 1.9.2}{\itemize{
+\item Fixed python environments based on the lastest changes in basilisk (using conda-forge installations).
+}}
+
 \section{Version 1.3.4}{\itemize{
 \item Fixed unit testing for MIT scores.
 }}
