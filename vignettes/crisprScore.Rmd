@@ -357,15 +357,15 @@ knitr::include_graphics("./figures/sequences_cas12a.svg")
 The DeepCpf1 algorithm is an on-target cutting efficiency prediction algorithm 
 for the Cas12a nuclease [@deepcpf1] using a convolutional neural network (CNN) 
 framework. It generates a score between 0 and 1 to quantify the likelihood of 
-Cas12a to cut for a given sgRNA. 3 nucleotides upstream and 4 nucleotides 
-downstream of the PAM sequence are needed for scoring:
+Cas12a to cut for a given sgRNA. 4 nucleotides upstream of the PAM sequence, and 3 nucleotides 
+downstream of the protospacer sequence are needed for scoring:
 
 
 ```{r, eval=FALSE}
-flank5 <- "ACC" #3bp
+flank5 <- "ACCA" #4bp
 pam    <- "TTTT" #4bp
 spacer <- "AATCGATGCTGATGCTAGATATT" #23bp
-flank3 <- "AAGT" #4bp
+flank3 <- "AAG" #3bp
 input  <- paste0(flank5, pam, spacer, flank3) 
 results <- getDeepCpf1Scores(input)
 ```
@@ -378,14 +378,16 @@ for the enhanced Cas12a (enCas12a) nuclease [@enpamgb] using a gradient-booster
 comparison to the wildtype Cas12 nuclease [@encas12a], and the enPAM+GB 
 algorithm takes PAM activity into account in the calculation of the final score.
 It generates a probability (therefore a score between 0 and 1) of a given sgRNA 
-to cut at the intended target. 3 nucleotides upstream of the PAM sequence and 4 nucleotides downstream of the protospacer sequence are needed for scoring:
+to cut at the intended target. 4 nucleotides upstream of the PAM
+sequence, and 3 nucleotides downstream of the protospacer
+sequence are needed for scoring:
 
 
 ```{r, eval=FALSE}
-flank5 <- "ACC" #3bp
+flank5 <- "ACCG" #4bp
 pam    <- "TTTT" #4bp
 spacer <- "AATCGATGCTGATGCTAGATATT" #23bp
-flank3 <- "AAGT" #4bp
+flank3 <- "AAG" #3bp
 input  <- paste0(flank5, pam, spacer, flank3) 
 results <- getEnPAMGBScores(input)
 ```

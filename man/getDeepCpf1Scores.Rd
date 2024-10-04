@@ -29,17 +29,17 @@ Calculate on-target sgRNA activity scores for
 \details{
 The input sequences for DeepCpf1 scoring require 4 nucleotides
     upstream of the protospacer sequence, the protospacer sequence
-    itself (4bp PAM sequence + 23bp spacer sequence) and 3 nucleootides 
+    itself (4bp PAM sequence + 23bp spacer sequence) and 3 nucleotides 
     downstream of the protospacer sequence, for a total of 34 nucleotides.
     If \code{convertPAM} is set to \code{TRUE}, any non-canonical PAM
     sequence will be convert to TTTC for scoring purposes.
 }
 \examples{
 if (interactive()){
-flank5 <- "ACC" #3bp
+flank5 <- "ACCG" #4bp
 pam    <- "TTTT" #4bp
 spacer <- "AATCGATGCTGATGCTAGATATT" #23bp
-flank3 <- "AAGT" #4bp
+flank3 <- "AAG" #4bp
 input  <- paste0(flank5, pam, spacer, flank3) 
 results <- getDeepCpf1Scores(input)
 }

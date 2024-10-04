@@ -3,6 +3,11 @@
 \encoding{UTF-8}
 
 
+\section{Version 1.9.3}{\itemize{
+\item Fixed documentation for enPamGB and DeepCpf1 algorithms. 
+}}
+
+
 \section{Version 1.9.2}{\itemize{
 \item Fixed python environments based on the lastest changes in basilisk (using conda-forge installations).
 }}
