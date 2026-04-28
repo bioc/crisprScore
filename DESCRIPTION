@@ -1,5 +1,5 @@
 Package: crisprScore
-Version: 1.15.3
+Version: 1.16.0
 Date: 2026-04-02
 Title: On-Target and Off-Target Scoring Algorithms for CRISPR gRNAs
 Authors@R: c(
